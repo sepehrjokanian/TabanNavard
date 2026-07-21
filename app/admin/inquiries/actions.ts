@@ -1,0 +1,1 @@
+"use server";import{db}from"@/lib/db";import{revalidatePath}from"next/cache";export async function updateInquiry(fd:FormData){await db.inquiry.update({where:{id:String(fd.get("id"))},data:{status:String(fd.get("status"))as any,adminNotes:String(fd.get("adminNotes")||"")}});revalidatePath("/admin/inquiries")}

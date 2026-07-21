@@ -1,0 +1,1 @@
+import{auth}from"@/auth";export default auth(req=>{if(req.nextUrl.pathname.startsWith("/admin")&&!req.nextUrl.pathname.startsWith("/admin/login")&&!req.auth)return Response.redirect(new URL(`/admin/login?callbackUrl=${encodeURIComponent(req.nextUrl.pathname)}`,req.url))});export const config={matcher:["/admin/:path*"]};

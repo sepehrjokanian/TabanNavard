@@ -1,0 +1,1 @@
+export function cn(...x:(string|false|undefined)[]){return x.filter(Boolean).join(" ")}export const money=(v:unknown)=>v?new Intl.NumberFormat("fa-IR").format(Number(v))+" تومان":"برای اطلاع از قیمت تماس بگیرید";

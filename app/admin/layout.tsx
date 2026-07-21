@@ -1,0 +1,1 @@
+import{AdminNav}from"@/components/admin-nav";export default function L({children}:{children:React.ReactNode}){return <div className="min-h-screen md:flex"><AdminNav/><main className="flex-1 p-6 md:p-10">{children}</main></div>}
