@@ -48,7 +48,7 @@ export default async function Home() {
             <ol className="relative mt-10 grid gap-8 md:grid-cols-4 md:gap-4 before:absolute before:bottom-auto before:start-[1.25rem] before:top-0 before:h-full before:w-px before:bg-cyan-500/40 md:before:start-0 md:before:top-5 md:before:h-px md:before:w-full">
               {milestones.map((item, index) => (
                 <li key={item.year} className="relative ps-14 md:ps-0 md:pt-12">
-                  <span className="absolute start-2 top-0 grid h-10 w-10 place-items-center rounded-full border-4 border-paper-50 bg-cyan-500 text-xs font-bold text-white md:start-1/2 md:-translate-x-1/2">{index + 1}</span>
+                  <span className="absolute start-2 top-0 grid h-10 w-10 place-items-center rounded-full border-4 border-paper-50 bg-cyan-500 text-xs font-bold text-white md:start-1/2 md:-translate-x-1/2 rtl:md:translate-x-1/2">{index + 1}</span>
                   <b className="text-xl text-blue-600">{item.year.toLocaleString("fa-IR")}</b>
                   <h4 className="mt-2 font-bold">{item.title}</h4>
                   <p className="mt-2 text-sm leading-7 text-ink-900/70">{item.text}</p>

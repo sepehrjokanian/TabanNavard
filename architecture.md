@@ -2,7 +2,7 @@
 
 ## Stack
 - **Framework:** Next.js 14+ (App Router), TypeScript
-- **Styling:** Tailwind CSS + shadcn/ui (admin) 
+- **Styling:** Tailwind CSS + custom lightweight UI system (`components/ui.tsx`) chosen over shadcn/ui to minimize bundle size, avoid external dependency bloat, and maintain direct control over brand aesthetics
 - **Animation:** Framer Motion
 - **ORM:** Prisma
 - **Database:** Neon (Postgres, serverless)

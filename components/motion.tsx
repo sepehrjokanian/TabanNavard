@@ -14,7 +14,7 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
 }
 export function FloatingMotif({ children }: { children: React.ReactNode }) {
   const reduceMotion = useReducedMotion();
-  return <motion.div className="absolute -left-20 top-20 w-96 text-cyan-500/10" animate={reduceMotion ? undefined : { y: [0, 18, 0], rotate: [0, 2, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>{children}</motion.div>;
+  return <motion.div className="absolute -start-20 top-20 w-96 text-cyan-500/10" animate={reduceMotion ? undefined : { y: [0, 18, 0], rotate: [0, 2, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>{children}</motion.div>;
 }
 export function AnimatedStat({ value, label }: { value: number; label: string }) {
   const ref = useRef<HTMLDivElement>(null); const visible = useInView(ref, { once: true, amount: 0.5 }); const reduceMotion = useReducedMotion(); const [shown, setShown] = useState(reduceMotion ? value : 0);
