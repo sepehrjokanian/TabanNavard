@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { createInquiry } from "@/app/actions";
 import { Button } from "./ui";
@@ -12,9 +13,16 @@ export function ContactForm({
   source?: "PRODUCT" | "CONTACT_FORM";
 }) {
   const [state, formAction] = useFormState(createInquiry, null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state?.ok) {
+      formRef.current?.reset();
+    }
+  }, [state]);
 
   return (
-    <form action={formAction} className="grid gap-4">
+    <form ref={formRef} action={formAction} className="grid gap-4">
       <input name="website" tabIndex={-1} autoComplete="off" className="hidden" />
       <input type="hidden" name="source" value={source} />
       {productId && <input type="hidden" name="productId" value={productId} />}

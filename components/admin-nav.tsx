@@ -2,6 +2,11 @@ import Link from "next/link";
 import { auth, signOut } from "@/auth";
 import { ShieldCheck, UserCheck } from "lucide-react";
 
+async function adminSignOut() {
+  "use server";
+  await signOut({ redirectTo: "/admin/login" });
+}
+
 export async function AdminNav() {
   const session = await auth();
   const isSuperAdmin = session?.user?.role === "SUPER_ADMIN";
@@ -59,13 +64,8 @@ export async function AdminNav() {
       </div>
 
       <div className="pt-6 border-t border-white/10 mt-6">
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/admin/login" });
-          }}
-        >
-          <button className="text-red-400 hover:text-red-300 transition text-sm font-medium">
+        <form action={adminSignOut}>
+          <button type="submit" className="text-red-400 hover:text-red-300 transition text-sm font-medium">
             خروج از حساب
           </button>
         </form>

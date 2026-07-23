@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Trash2, ShieldAlert } from "lucide-react";
+import { useFormState } from "react-dom";
+import { Plus, Trash2, ShieldAlert, CheckCircle2, AlertCircle } from "lucide-react";
 import { saveProduct } from "@/app/admin/products/actions";
 
 type SpecRow = { key: string; value: string };
@@ -28,6 +29,8 @@ export function ProductForm({
   product?: ProductValue;
   isSubAdmin?: boolean;
 }) {
+  const [state, formAction] = useFormState(saveProduct, null);
+
   const initialSpecs = Object.entries(product?.specs ?? { "ظرفیت": "۶۳۰ کیلوگرم" }).map(([key, value]) => ({ key, value: String(value) }));
   const [specs, setSpecs] = useState<SpecRow[]>(initialSpecs.length ? initialSpecs : [{ key: "", value: "" }]);
   const updateSpec = (index: number, field: keyof SpecRow, value: string) => setSpecs((rows) => rows.map((row, i) => i === index ? { ...row, [field]: value } : row));
@@ -36,7 +39,24 @@ export function ProductForm({
   const serializedSpecs = JSON.stringify(Object.fromEntries(specs.filter((row) => row.key.trim()).map((row) => [row.key.trim(), row.value.trim()])));
 
   return (
-    <form action={saveProduct} className="grid gap-5" aria-label={product?.id ? "ویرایش محصول" : "افزودن محصول"}>
+    <form action={formAction} className="grid gap-5" aria-label={product?.id ? "ویرایش محصول" : "افزودن محصول"}>
+      {state?.message && (
+        <div
+          className={`flex items-center gap-3 rounded-button p-4 text-sm font-bold border ${
+            state.ok
+              ? "border-emerald-500/30 bg-emerald-50 text-emerald-800"
+              : "border-rose-500/30 bg-rose-50 text-rose-800"
+          }`}
+        >
+          {state.ok ? (
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
+          ) : (
+            <AlertCircle className="h-5 w-5 shrink-0 text-rose-600" />
+          )}
+          <span>{state.message}</span>
+        </div>
+      )}
+
       {isSubAdmin && (
         <div className="flex items-center gap-3 rounded-button border border-amber-500/30 bg-amber-500/10 p-4 text-amber-800">
           <ShieldAlert className="h-5 w-5 shrink-0 text-amber-600" />

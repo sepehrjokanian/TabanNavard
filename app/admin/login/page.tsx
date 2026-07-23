@@ -1,9 +1,20 @@
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const metadata = { title: "ورود مدیریت | آسانسور تابان نورد" };
 
-export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+export default async function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+  const session = await auth();
+
+  if (session?.user && session.user.isActive !== false) {
+    if (session.user.role === "SUPER_ADMIN") {
+      redirect("/admin/dashboard");
+    } else {
+      redirect("/admin/products");
+    }
+  }
+
   return (
     <main className="grid min-h-screen place-items-center bg-gradient-to-br from-navy-900 via-navy-800 to-blue-900 p-4 text-ink-900">
       <form
@@ -13,7 +24,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
             await signIn("credentials", {
               email: fd.get("email"),
               password: fd.get("password"),
-              redirectTo: "/admin/dashboard",
+              redirectTo: "/admin",
             });
           } catch (error) {
             if (error instanceof AuthError) {

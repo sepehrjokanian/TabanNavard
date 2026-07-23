@@ -31,9 +31,9 @@ export default async function Home() {
 
   return (
     <>
+      <Nav />
       <VideoHero />
       <div id="company-content">
-        <Nav />
         <main id="main-content">
           <section className="relative grid min-h-[90vh] place-items-center overflow-hidden bg-gradient-to-bl from-navy-900 via-navy-700 to-blue-600 text-white">
             <FloatingMotif><BrandMotif className="w-full" /></FloatingMotif>

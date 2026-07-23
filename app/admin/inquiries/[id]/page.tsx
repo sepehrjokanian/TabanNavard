@@ -1,1 +1,27 @@
-import{db}from"@/lib/db";import{notFound}from"next/navigation";import{updateInquiry}from"../actions";export const dynamic="force-dynamic";export default async function I({params}:{params:{id:string}}){const x=await db.inquiry.findUnique({where:{id:params.id},include:{product:true}});if(!x)notFound();return <><h1 className="text-3xl font-bold">جزئیات درخواست</h1><div className="mt-6 rounded-card bg-white p-6"><p>{x.name} — {x.phone}</p><p className="my-4">{x.message}</p><form action={updateInquiry} className="grid gap-4"><input type="hidden" name="id" value={x.id}/><select name="status" defaultValue={x.status} className="border p-3"><option value="NEW">جدید</option><option value="CONTACTED">تماس گرفته</option><option value="CLOSED">بسته</option></select><textarea name="adminNotes" defaultValue={x.adminNotes||""} placeholder="یادداشت داخلی" className="border p-3"/><button className="bg-blue-600 p-3 text-white">ذخیره</button></form></div></>}
+import Link from "next/link";
+import { db } from "@/lib/db";
+import { notFound } from "next/navigation";
+import { InquiryForm } from "@/components/admin/inquiry-form";
+
+export const dynamic = "force-dynamic";
+
+export default async function InquiryDetailPage({ params }: { params: { id: string } }) {
+  const inquiry = await db.inquiry.findUnique({
+    where: { id: params.id },
+    include: { product: true },
+  });
+
+  if (!inquiry) notFound();
+
+  return (
+    <>
+      <Link href="/admin/inquiries" className="font-bold text-blue-600">
+        → بازگشت به لیست درخواست‌ها
+      </Link>
+      <div className="mt-6">
+        <h1 className="mb-6 text-3xl font-bold">جزئیات درخواست دریافت شده</h1>
+        <InquiryForm inquiry={inquiry} />
+      </div>
+    </>
+  );
+}
