@@ -62,7 +62,7 @@ export const db = new Proxy(prismaRaw, {
   get(target, prop, receiver) {
     const originalModel = Reflect.get(target, prop, receiver);
 
-    if (typeof prop === "string" && ["product", "companyContent", "companyStat", "certificate", "inquiry", "adminUser"].includes(prop)) {
+    if (typeof prop === "string" && ["product", "companyContent", "companyStat", "certificate", "inquiry", "adminUser", "adminActivityLog"].includes(prop)) {
       return new Proxy(originalModel ?? {}, {
         get(modelTarget, methodProp) {
           const originalMethod = Reflect.get(modelTarget, methodProp);
@@ -116,11 +116,14 @@ export const db = new Proxy(prismaRaw, {
                       email: seedEmail,
                       name: "مدیر تابان",
                       passwordHash: bcrypt.hashSync(seedPass, 10),
+                      role: "SUPER_ADMIN",
+                      isActive: true,
                       createdAt: new Date(),
                       updatedAt: new Date(),
                     };
                   }
                 }
+                if (methodProp === "findMany") return [];
               }
 
               if (prop === "inquiry") {
@@ -128,6 +131,12 @@ export const db = new Proxy(prismaRaw, {
                 if (methodProp === "findUnique" || methodProp === "findFirst") return fallbackInquiries[0];
                 if (methodProp === "count") return fallbackInquiries.filter(i => i.status === "NEW").length;
                 if (methodProp === "create") return { id: "new-inquiry", ...args[0]?.data };
+              }
+
+              if (prop === "adminActivityLog") {
+                if (methodProp === "create") return { id: "log-1", ...args[0]?.data, createdAt: new Date() };
+                if (methodProp === "findMany") return [];
+                if (methodProp === "count") return 0;
               }
 
               return Array.isArray(args[0]) ? [] : null;

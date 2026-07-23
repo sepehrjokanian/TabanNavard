@@ -23,14 +23,37 @@ enum InquirySource {
   CONTACT_FORM
 }
 
+enum AdminRole {
+  SUPER_ADMIN
+  SUB_ADMIN
+}
+
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String             @id @default(cuid())
+  email        String             @unique
   passwordHash String
   name         String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         AdminRole          @default(SUB_ADMIN)
+  isActive     Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  activityLogs AdminActivityLog[]
 }
+
+model AdminActivityLog {
+  id          String    @id @default(cuid())
+  adminUserId String
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  action      String
+  targetType  String
+  targetId    String
+  changes     Json
+  createdAt   DateTime  @default(now())
+
+  @@index([adminUserId])
+  @@index([targetType, targetId])
+}
+
 
 model Product {
   id          String          @id @default(cuid())
