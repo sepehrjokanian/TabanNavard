@@ -76,7 +76,8 @@ export default async function Home() {
           <Section id="certificates" className="bg-white"><Reveal><h2 className="text-3xl font-extrabold md:text-4xl">گواهینامه‌ها و افتخارات</h2></Reveal><div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{certs.map((certificate, index) => <Reveal key={certificate.id} delay={index * 0.08}><Card variant="accent" className="border-gold-500/40"><Placeholder label={certificate.title} /><h3 className="mt-4 font-bold text-white text-center">{certificate.title}</h3></Card></Reveal>)}</div></Section>
 
 
-          <Section id="contact"><Reveal className="grid gap-10 md:grid-cols-2"><div><p className="text-sm font-bold text-cyan-500">گفت‌وگو با کارشناسان</p><h2 className="mt-2 text-3xl font-extrabold md:text-4xl">تماس با ما</h2><p className="mt-5 leading-8">{content?.address}<br />{content?.phone}<br />{content?.email}</p></div><Card><ContactForm /></Card></Reveal></Section>
+          <Section id="contact"><Reveal className="grid gap-10 md:grid-cols-2"><div><p className="text-sm font-bold text-cyan-500">گفت‌وگو با کارشناسان</p><h2 className="mt-2 text-3xl font-extrabold md:text-4xl">تماس با ما</h2><p className="mt-5 leading-8">{content?.address}<br />{content?.phone}<br />{content?.email}</p></div><Card variant="accent"><ContactForm /></Card></Reveal></Section>
+
         </main>
         <Footer />
       </div>

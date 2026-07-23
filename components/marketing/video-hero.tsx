@@ -6,7 +6,7 @@ import { ShieldCheck, Award, Settings, Headphones } from "lucide-react";
 const mottos = [
   { id: 1, text: "ایمنی در هر طبقه، اطمینان در هر سفر", Icon: ShieldCheck },
   { id: 2, text: "تکنولوژی پیشرفته، بیش از دو دهه تجربه", Icon: Award },
-  { id: 3, text: "مهندسی دقیق، خدمات پایدار", Icon: Settings },
+  { id: 3, text: "مهندسی دقیق، خدمات پایدار و ثابت", Icon: Settings },
   { id: 4, text: "پشتیبانی دائمی، آسودگی خاطر همیشگی", Icon: Headphones },
 ];
 
