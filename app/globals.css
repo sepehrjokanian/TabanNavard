@@ -13,3 +13,26 @@ body { background: #F7F9FB; color: #111417; font-family: var(--font-vazirmatn), 
 ::selection { background: #7FD1F2; color: #0B2A4A; }
 @media (max-width: 767px) { .section { padding-block: 4rem; } .container { padding-inline: 1rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+
+@keyframes gradient-border-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.motto-card-animated-border {
+  position: relative;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, #0B2A4A, #1565A8, #29ABE2, #C9A24B, #7FD1F2, #0B2A4A);
+  background-size: 300% 300%;
+  animation: gradient-border-shift 10s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motto-card-animated-border {
+    animation: none !important;
+    background-position: 50% 50%;
+  }
+}
+

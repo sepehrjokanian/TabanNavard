@@ -1,19 +1,46 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Button({ className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) { return <button className={cn("rounded-button bg-gradient-to-l from-cyan-500 to-blue-600 px-6 py-3 font-bold text-white transition hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500", className)} {...props} />; }
-export function Card({ className = "", children }: { className?: string; children: React.ReactNode }) { return <div className={cn("rounded-card border border-navy-900/10 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl", className)}>{children}</div>; }
+export function Card({ className = "", variant = "default", children }: { className?: string; variant?: "default" | "accent"; children: React.ReactNode }) {
+  return (
+    <div
+      className={cn(
+        "rounded-card p-6 transition hover:-translate-y-1 hover:shadow-xl",
+        variant === "accent"
+          ? "border border-cyan-500/30 bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md shadow-blue-600/15"
+          : "border border-navy-900/10 bg-white shadow-sm text-ink-900",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 export function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) { return <section id={id} className={cn("section scroll-mt-24", className)}><div className="container">{children}</div></section>; }
 export function Badge({ children }: { children: React.ReactNode }) { return <span className="rounded-full bg-gold-500/15 px-3 py-1 text-sm font-bold text-gold-500">{children}</span>; }
 export function BrandMotif({ className = "" }: { className?: string }) { return <svg viewBox="0 0 100 55" aria-hidden className={className}><path d="M5 45 50 5l45 40H72L50 25 28 45Z" fill="currentColor" /></svg>; }
-export function Placeholder({ label }: { label: string }) { return <div role="img" aria-label={label} className="grid aspect-[4/3] place-items-center rounded-card bg-gradient-to-br from-navy-900 to-blue-600 text-white"><BrandMotif className="w-24 text-cyan-500" /></div>; }
+export function Placeholder({ label }: { label: string }) { return <div role="img" aria-label={label} className="grid aspect-[4/3] place-items-center rounded-card bg-white shadow-inner"><BrandMotif className="w-24 text-blue-600" /></div>; }
+
+
 export function LogoPlaceholder({ className = "", variant = "dark" }: { className?: string; variant?: "light" | "dark" }) {
-  return <div role="img" aria-label="محل لوگوی آسانسور تابان نورد" className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-full border", variant === "dark" ? "border-white/25 bg-white/10 text-cyan-300" : "border-navy-900/15 bg-paper-50 text-blue-600", className)}><BrandMotif className="w-8" /></div>;
+  return (
+    <Image
+      src="/images/logo/logo.webp"
+      alt="لوگوی آسانسور تابان نورد"
+      width={144}
+      height={96}
+      priority
+      className={cn("h-12 w-auto shrink-0 object-contain", className)}
+    />
+  );
 }
 
-const links = [{ href: "/company", label: "خانه" }, { href: "/products", label: "محصولات" }, { href: "/company#about", label: "درباره ما" }, { href: "/company#certificates", label: "گواهینامه‌ها" }, { href: "/company#contact", label: "تماس" }];
+
+const links = [{ href: "/", label: "خانه" }, { href: "/products", label: "محصولات" }, { href: "/#about", label: "درباره ما" }, { href: "/#certificates", label: "گواهینامه‌ها" }, { href: "/#contact", label: "تماس" }];
 export function Nav() {
-  return <header className="sticky top-0 z-50 border-b border-white/10 bg-navy-900/95 text-white backdrop-blur"><nav aria-label="ناوبری اصلی" className="container flex min-h-20 items-center justify-between gap-4"><Link href="/company" className="flex items-center gap-3 rounded-button font-extrabold focus-visible:ring-2 focus-visible:ring-cyan-300"><LogoPlaceholder variant="dark" /><span>آسانسور تابان نورد</span></Link><div className="hidden gap-5 text-sm md:flex">{links.map((link) => <Link className="rounded px-1 py-2 hover:text-cyan-300 focus-visible:ring-2 focus-visible:ring-cyan-300" key={link.href} href={link.href}>{link.label}</Link>)}</div><details className="relative md:hidden"><summary aria-label="باز کردن منو" className="list-none rounded-button border border-white/20 p-2 focus-visible:ring-2 focus-visible:ring-cyan-300"><Menu /></summary><div className="absolute end-0 top-14 grid min-w-52 gap-1 rounded-card border border-white/10 bg-navy-900 p-3 shadow-xl">{links.map((link) => <Link className="rounded-button px-4 py-3 hover:bg-navy-700" key={link.href} href={link.href}>{link.label}</Link>)}</div></details></nav></header>;
+  return <header className="sticky top-0 z-50 border-b border-white/10 bg-navy-900/95 text-white backdrop-blur"><nav aria-label="ناوبری اصلی" className="container flex min-h-20 items-center justify-between gap-4"><Link href="/" className="flex items-center gap-3 rounded-button font-extrabold focus-visible:ring-2 focus-visible:ring-cyan-300"><LogoPlaceholder variant="dark" /><span>آسانسور تابان نورد</span></Link><div className="hidden gap-5 text-sm md:flex">{links.map((link) => <Link className="rounded px-1 py-2 hover:text-cyan-300 focus-visible:ring-2 focus-visible:ring-cyan-300" key={link.href} href={link.href}>{link.label}</Link>)}</div><details className="relative md:hidden"><summary aria-label="باز کردن منو" className="list-none rounded-button border border-white/20 p-2 focus-visible:ring-2 focus-visible:ring-cyan-300"><Menu /></summary><div className="absolute end-0 top-14 grid min-w-52 gap-1 rounded-card border border-white/10 bg-navy-900 p-3 shadow-xl">{links.map((link) => <Link className="rounded-button px-4 py-3 hover:bg-navy-700" key={link.href} href={link.href}>{link.label}</Link>)}</div></details></nav></header>;
 }
-export function Footer() { return <footer className="bg-navy-900 py-12 text-white"><div className="container flex flex-wrap items-center justify-between gap-6"><Link href="/company" className="flex items-center gap-3 rounded-button focus-visible:ring-2 focus-visible:ring-cyan-300"><LogoPlaceholder variant="dark" /><b>آسانسور تابان نورد</b></Link><p>مهندسی ایمن برای حرکت رو به بالا</p></div></footer>; }
+export function Footer() { return <footer className="bg-navy-900 py-12 text-white"><div className="container flex flex-wrap items-center justify-between gap-6"><Link href="/" className="flex items-center gap-3 rounded-button focus-visible:ring-2 focus-visible:ring-cyan-300"><LogoPlaceholder variant="dark" /><b>آسانسور تابان نورد</b></Link><p>مهندسی ایمن برای حرکت رو به بالا</p></div></footer>; }
